@@ -28,12 +28,6 @@ class ContextoMethod(BaseMethod):
             or os.environ.get("CONTEXTO_BRIDGE_URL")
             or "http://localhost:3456"
         )
-        self.provider = self.config.get("provider", os.environ.get("CONTEXTO_PROVIDER", "openrouter"))
-        self.api_key = self.config.get("apiKey", os.environ.get("CONTEXTO_API_KEY", ""))
-        self.embed_model = self.config.get("embedModel", os.environ.get("CONTEXTO_EMBED_MODEL"))
-
-        self.mindmap_config = self.config.get("mindmap", {})
-        self.search_options = self.config.get("search", {})
 
         self._episode_counter = 0
 
@@ -59,10 +53,6 @@ class ContextoMethod(BaseMethod):
             json={
                 "episodeId": episode_id,
                 "items": items,
-                "provider": self.provider,
-                "apiKey": self.api_key,
-                "embedModel": self.embed_model,
-                "mindmapConfig": self.mindmap_config,
             },
             timeout=300,
         )
@@ -80,7 +70,6 @@ class ContextoMethod(BaseMethod):
             json={
                 "episodeId": episode_id,
                 "question": question,
-                "searchOptions": self.search_options,
             },
             timeout=60,
         )
