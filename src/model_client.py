@@ -52,7 +52,10 @@ class ModelClient:
             from openai import OpenAI
             # Use api_key from config if provided, otherwise will use OPENAI_API_KEY env var
             api_key = self.config.get("api_key") or os.getenv("OPENAI_API_KEY")
-            if api_key:
+            base_url = self.config.get("base_url")
+            if api_key and base_url:
+                return OpenAI(api_key=api_key, base_url=base_url)
+            elif api_key:
                 return OpenAI(api_key=api_key)
             else:
                 # Let OpenAI SDK handle the API key (will use OPENAI_API_KEY env var)
